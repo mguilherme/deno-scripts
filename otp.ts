@@ -1,5 +1,5 @@
-import Behin from "https://deno.land/x/behin/mod.ts";
-import "https://deno.land/x/dotenv/load.ts";
+import Behin from 'https://deno.land/x/behin/mod.ts';
+import 'https://deno.land/x/dotenv/load.ts';
 
 const secret = Deno.env.get('TOTP') ?? '';
 
