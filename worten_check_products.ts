@@ -1,6 +1,7 @@
 import {DOMParser} from 'https://deno.land/x/deno_dom/deno-dom-wasm.ts';
 import {blue, brightGreen, brightMagenta, brightRed, brightYellow, cyan} from 'https://deno.land/std/fmt/colors.ts';
-import {Table} from "https://deno.land/x/cliffy@v0.16.0/table/mod.ts";
+import {Table} from 'https://deno.land/x/cliffy/table/mod.ts';
+import {TerminalSpinner} from 'https://deno.land/x/spinners/mod.ts';
 
 const getProductDetails = async (url: string) => {
     const res = await fetch(url);
@@ -41,9 +42,14 @@ const links = [
     'https://www.worten.pt/gaming/xbox/consolas/xbox-series-x-s/consola-xbox-series-s-512-gb-7253966'
 ];
 
+const terminalSpinner = new TerminalSpinner(`Fetching ${links.length} products...`);
+terminalSpinner.start();
+
 const products = await Promise.all(
     links.map(async url => (
         {...await getProductDetails(url), url, shortUrl: await getTinyUrl(url)}
     ))
 );
+
+terminalSpinner.succeed();
 printTable(products);
