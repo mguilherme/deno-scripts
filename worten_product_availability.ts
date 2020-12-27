@@ -6,14 +6,18 @@ const productInfo = async (url: string) => {
     const html = await res.text();
 
     const doc: any = new DOMParser().parseFromString(html, 'text/html');
-    const description = doc.querySelector('.pdp-product__title').querySelector('h1').textContent;
-    const available = !doc.querySelectorAll('.w-product__actions')[1].querySelector('div').className.endsWith('unavailable')
 
-    return {description, available}
+    const description = doc.querySelector('.pdp-product__title h1').textContent;
+    const available = !doc.querySelectorAll('.w-product__actions')[1].querySelector('div').className.endsWith('unavailable')
+    const currentPrice = doc.querySelector('.w-product__price__current').getAttribute('content')
+    const currency = doc.querySelector('.w-product-price__currency').textContent
+
+    return {description, currency, currentPrice, available}
 };
 
 const printContent = (content: any) => {
     console.log(`${brightYellow("Description =>")} ${brightBlue(content.description)}`);
+    console.log(`${brightYellow("Price =>")} ${brightBlue(content.currentPrice)}`);
     console.log(`${brightYellow("Availability =>")} ${content.available ? brightGreen('Available!') : brightRed('Unavailable!')}\n`);
 };
 
