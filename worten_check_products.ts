@@ -2,6 +2,8 @@ import {DOMParser} from 'https://deno.land/x/deno_dom/deno-dom-wasm.ts';
 import {blue, brightGreen, brightMagenta, brightRed, brightYellow, cyan} from 'https://deno.land/std/fmt/colors.ts';
 import {Table} from 'https://deno.land/x/cliffy/table/mod.ts';
 import {TerminalSpinner} from 'https://deno.land/x/spinners/mod.ts';
+import {readLines} from 'https://deno.land/x/std/io/mod.ts';
+import {join} from 'https://deno.land/x/std/path/mod.ts';
 
 const getProductDetails = async (url: string) => {
     const res = await fetch(url);
@@ -35,21 +37,30 @@ const printTable = (products: any[]) => {
 
 const getTinyUrl = async (url: string) => (await fetch(`http://tinyurl.com/api-create.php?url=${url}`)).text();
 
-const links = [
-    'https://www.worten.pt/gaming/playstation/consolas/ps5/consola-ps5-825gb-7196053',
-    'https://www.worten.pt/gaming/playstation/consolas/ps5/consola-ps5-edicao-digital-825-gb-7196054',
-    'https://www.worten.pt/gaming/xbox/consolas/xbox-series-x-s/consola-xbox-series-x-1-tb-7240976',
-    'https://www.worten.pt/gaming/xbox/consolas/xbox-series-x-s/consola-xbox-series-s-512-gb-7253966'
-];
+const getLinks = async (file: string) => {
+    const filename = join(Deno.cwd(), file);
+    const fileReader = await Deno.open(filename);
 
-const terminalSpinner = new TerminalSpinner(`Fetching ${links.length} products...`);
-terminalSpinner.start();
+    const links: string[] = [];
+    for await (let line of readLines(fileReader)) {
+        links.push(line);
+    }
+    return links.filter(item => item);
+}
 
+
+const spinner = new TerminalSpinner();
+
+spinner.start('Reading product links from file...');
+const links = await getLinks('products.txt');
+spinner.succeed();
+
+spinner.start(`Fetching ${links.length} products...`)
 const products = await Promise.all(
     links.map(async url => (
         {...await getProductDetails(url), url, shortUrl: await getTinyUrl(url)}
     ))
 );
+spinner.succeed();
 
-terminalSpinner.succeed();
 printTable(products);
