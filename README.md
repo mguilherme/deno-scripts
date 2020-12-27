@@ -10,7 +10,7 @@ Retrieves a random quote from `https://api.chucknorris.io/`.
 
 #### Run:
 
-```bash
+```console
 $ deno run --allow-net chuck_norris.ts
 ```
 
@@ -27,24 +27,27 @@ a `TOTP` property.
 
 #### Run:
 
-```bash
+```console
 $ deno run --allow-read --allow-env otp.ts
 ```
 
 #### Resources
+
 * Source File - [otp.ts](otp.ts)
 
 ## Worten Check Products
 
 Web-Scrapper for [Worten.pt](https://www.worten.pt) web site products.
+
 Make sure you have a `products.txt` file with the product links (one per line).
 
 #### Run:
 
-```bash
+```console
 $ deno run --allow-net --allow-read worten_check_products.ts
 ```
 
 #### Resources
+
 * Source File - [worten_check_products.ts](worten_check_products.ts)
 * Products - [products.txt](products.txt)
