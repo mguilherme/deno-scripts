@@ -14,6 +14,12 @@ Retrieves a random quote from `https://api.chucknorris.io/`.
 $ deno run --allow-net chuck_norris.ts
 ```
 
+#### Output
+
+```console
+Chuck Norris' avatar is actually shorter than him.
+```
+
 #### Resources:
 
 * Source File - [chuck_norris.ts](chuck_norris.ts)
@@ -31,6 +37,12 @@ a `TOTP` property.
 $ deno run --allow-read --allow-env otp.ts
 ```
 
+#### Output
+
+```console
+219323
+```
+
 #### Resources
 
 * Source File - [otp.ts](otp.ts)
@@ -46,6 +58,10 @@ Make sure you have a `products.txt` file with the product links (one per line).
 ```console
 $ deno run --allow-net --allow-read worten_check_products.ts
 ```
+
+#### Output
+
+![products output](_resources/products-output.png)
 
 #### Resources
 
