@@ -4,6 +4,7 @@ import {Table} from 'https://deno.land/x/cliffy/table/mod.ts';
 import {TerminalSpinner} from 'https://deno.land/x/spinners/mod.ts';
 import {readLines} from 'https://deno.land/x/std/io/mod.ts';
 import {join} from 'https://deno.land/x/std/path/mod.ts';
+import {shorten} from 'https://deno.land/x/tinyurl/mod.ts';
 
 const getProductDetails = async (url: string) => {
     const res = await fetch(url);
@@ -35,8 +36,6 @@ const printTable = (products: any[]) => {
         .render();
 }
 
-const getTinyUrl = async (url: string) => (await fetch(`http://tinyurl.com/api-create.php?url=${url}`)).text();
-
 const getLinks = async (file: string) => {
     const filename = join(Deno.cwd(), file);
     const fileReader = await Deno.open(filename);
@@ -58,7 +57,7 @@ spinner.succeed();
 spinner.start(`Fetching ${links.length} products...`)
 const products = await Promise.all(
     links.map(async url => (
-        {...await getProductDetails(url), url, shortUrl: await getTinyUrl(url)}
+        {...await getProductDetails(url), url, shortUrl: await shorten(url)}
     ))
 );
 spinner.succeed();
