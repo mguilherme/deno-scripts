@@ -18,7 +18,7 @@ const getProductDetails = async (url: string) => {
     const currency = doc.querySelector('.w-product-price__currency').textContent;
     const description = doc.querySelector('.w-product-about__info__wrapper').innerHTML;
 
-    return {title, currency, currentPrice, available, description};
+    return {title, currency, currentPrice, available, description, url, shortUrl: await shorten(url)};
 };
 
 const printTable = (products: any[]) => {
@@ -50,15 +50,13 @@ const getLinks = async (file: string) => {
 
 const spinner = new TerminalSpinner();
 
-spinner.start('Reading product links from file...');
+spinner.start('Reading links from file...');
 const links = await getLinks('products.txt');
 spinner.succeed();
 
 spinner.start(`Fetching ${links.length} products...`)
 const products = await Promise.all(
-    links.map(async url => (
-        {...await getProductDetails(url), url, shortUrl: await shorten(url)}
-    ))
+    links.map(url => getProductDetails(url))
 );
 spinner.succeed();
 
