@@ -41,7 +41,7 @@ const getLinks = async (file: string) => {
     const fileReader = await Deno.open(filename);
 
     const links: string[] = [];
-    for await (let line of readLines(fileReader)) {
+    for await (const line of readLines(fileReader)) {
         links.push(line);
     }
     return links.filter(item => item);
