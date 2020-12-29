@@ -54,7 +54,7 @@ const getLinks = async (file: string) => {
     return links.filter(item => item);
 }
 
-
+// Main execution
 const spinner = new TerminalSpinner();
 
 spinner.start('Reading links from file...');
