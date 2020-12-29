@@ -56,7 +56,7 @@ Make sure you have a `products.txt` file with the product links (one per line).
 #### Run:
 
 ```console
-$ deno run --allow-net --allow-read worten_check_products.ts
+$ deno run --allow-net --allow-read worten_check_products.ts products.txt
 ```
 
 #### Output

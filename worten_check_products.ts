@@ -51,7 +51,7 @@ const getLinks = async (file: string) => {
 const spinner = new TerminalSpinner();
 
 spinner.start('Reading links from file...');
-const links = await getLinks('products.txt');
+const links = await getLinks(Deno.args[0]);
 spinner.succeed();
 
 spinner.start(`Fetching ${links.length} products...`)
