@@ -29,19 +29,19 @@ const getProductDetails = async (url: string): Promise<Product> => {
     const currency = doc.querySelector('.w-product-price__currency').textContent;
     const description = doc.querySelector('.w-product-about__info__wrapper').innerHTML;
 
-    return {title, currentPrice, currency, available, description, url, shortUrl: await shorten(url)}
+    return {title, currentPrice, currency, available, description, url, shortUrl: await shorten(url)};
 };
 
 const printTable = (products: Product[]) => {
 
     const header = [brightYellow('Title'), brightYellow('Price'), brightYellow('Availability'), brightYellow('Link')];
-    const availability = (available: boolean) => available ? brightGreen('Available') : brightRed('Unavailable')
+    const availability = (available: boolean) => available ? brightGreen('Available') : brightRed('Unavailable');
     const body = products.map(product => [
         brightMagenta(product.title),
         cyan(`${product.currency}${product.currentPrice}`),
         availability(product.available),
         blue(product.shortUrl)
-    ])
+    ]);
 
     new Table()
         .header(header)
@@ -71,7 +71,7 @@ spinner.start('Reading links from file...');
 const links = await getLinks(Deno.args[0]);
 spinner.succeed();
 
-spinner.start(`Fetching ${links.length} products...`)
+spinner.start(`Fetching ${links.length} products...`);
 const products = await Promise.all(
     links.map(url => getProductDetails(url))
 );
