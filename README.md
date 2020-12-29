@@ -51,7 +51,7 @@ $ deno run --allow-read --allow-env otp.ts
 
 Web-Scrapper for [Worten.pt](https://www.worten.pt) web site products.
 
-Make sure you have a `products.txt` file with the product links (one per line).
+Make sure you have a file with the product links (one per line), check [products.txt](products.txt) as an example.
 
 #### Run:
 
