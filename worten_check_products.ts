@@ -7,6 +7,7 @@ import {join} from 'https://deno.land/x/std/path/mod.ts';
 import {shorten} from 'https://deno.land/x/tinyurl/mod.ts';
 
 const getProductDetails = async (url: string) => {
+
     const res = await fetch(url);
     const html = await res.text();
 
@@ -22,14 +23,19 @@ const getProductDetails = async (url: string) => {
 };
 
 const printTable = (products: any[]) => {
+
+    const header = [brightYellow('Title'), brightYellow('Price'), brightYellow('Availability'), brightYellow('Link')];
+    const availability = (available: boolean) => available ? brightGreen('Available') : brightRed('Unavailable')
+    const body = products.map(product => [
+        brightMagenta(product.title),
+        cyan(`${product.currency}${product.currentPrice}`),
+        availability(product.available),
+        blue(product.shortUrl)
+    ])
+
     new Table()
-        .header([brightYellow('Title'), brightYellow('Price'), brightYellow('Availability'), brightYellow('Link')])
-        .body(
-            products.map(p => {
-                const available = p.available ? brightGreen('Available') : brightRed('Unavailable');
-                return [brightMagenta(p.title), cyan(`${p.currency}${p.currentPrice}`), available, blue(p.shortUrl)]
-            })
-        )
+        .header(header)
+        .body(body)
         .padding(1)
         .indent(2)
         .border(true)
@@ -37,6 +43,7 @@ const printTable = (products: any[]) => {
 }
 
 const getLinks = async (file: string) => {
+
     const filename = join(Deno.cwd(), file);
     const fileReader = await Deno.open(filename);
 
