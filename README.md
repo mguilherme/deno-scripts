@@ -61,7 +61,7 @@ $ deno run --allow-net --allow-read worten_check_products.ts products.txt
 
 #### Output
 
-![products output](_resources/products-output.png)
+![products output](.resources/products-output.gif)
 
 #### Resources
 
