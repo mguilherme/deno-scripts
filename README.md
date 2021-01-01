@@ -4,9 +4,36 @@
 >
 > Deno is a simple, modern and secure runtime for JavaScript and TypeScript that uses V8 and is built in Rust.
 
+## Compress Files
+
+Small script for compressing each file to a zip file, please modify the `sourceFolder`,  `targetFolder`
+and `FILE_EXTENSION`. All the original files will be compressed in the `targetFolder`.
+
+This won't run in other operating systems besides MacOS since it's using `Deno.run`. 
+
+#### Run:
+
+```console
+$ deno run --allow-read --allow-run compress_files.ts
+```
+
+#### Output
+
+```console
+  ...
+  adding: Bonk's Revenge (U).pce (deflated 33%)
+
+  adding: Blazing Lazers (USA).pce (deflated 47%)
+  ...
+```
+
+#### Resources:
+
+* Source File - [compress_files.ts](compress_files.ts)
+
 ## Chuck Norris
 
-Retrieves a random quote from `https://api.chucknorris.io/`.
+Retrieves a random quote from [https://api.chucknorris.io/](https://api.chucknorris.io/).
 
 #### Run:
 
