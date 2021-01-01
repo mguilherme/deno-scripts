@@ -17,7 +17,8 @@ const compress = async (file: Deno.DirEntry) => {
 
     const output = await cmd.output();
     cmd.close();
-    return new TextDecoder().decode(output);
+
+    return new TextDecoder('utf-8').decode(output);
 }
 
 try {
